@@ -11,6 +11,8 @@ class Evento
 
     public Evento(string titolo, DateTime tipo, int capienzaMassima)
     {
+        //e inizializza gli opportuni attributi facendo uso dei metodi e controlli già fatti. Per l’attributo
+        //posti prenotati invece si occupa di inizializzarlo lui a 0.
         Titolo = titolo;
         Tipo = tipo;
         CapienzaMassima = capienzaMassima;

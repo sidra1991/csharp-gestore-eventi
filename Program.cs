@@ -4,29 +4,62 @@ using System;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Principal;
 
-Console.WriteLine("Hello, World!");
+// funzioni utili
+
+int ScelteMenuINT()
+{
+    int scelta = 0;
+    try
+    {
+
+         scelta = Convert.ToInt32(Console.ReadLine());
+    }
+    catch (FormatException)
+    {
+        Console.WriteLine("la scelta effettuata non è un numero");
+    }
+    catch (OverflowException)
+    {
+        Console.WriteLine("il numero è troppo grande");
+    }
+
+    return scelta;
+
+}
 
 
-//ai setters inserire gli opportuni controlli in modo che la data non sia già passata, che il titolo
-//non sia vuoto e che la capienza massima di posti sia un numero positivo. In caso contrario
-//sollevare opportune eccezioni.
-
-//e inizializza gli opportuni attributi facendo uso dei metodi e controlli già fatti. Per l’attributo
-//posti prenotati invece si occupa di inizializzarlo lui a 0.
-
-//Le eccezioni possono essere generiche (Exception) o usate quelle già messe a
-//disposizione da C#, ma aggiungete un eventuale messaggio chiaro per
-//comunicare che cosa è successo.
 
 void menu()
 {
-    //    1.Nel vostro programma principale Program.cs, chiedete all’utente di inserire un
-    //nuovo evento con tutti i parametri richiesti dal costruttore.
+    Console.WriteLine("menu iniziale scegli l'operazione");
+    Console.WriteLine("1. nuovo evento");
 
+
+    int scelta = ScelteMenuINT();
+
+        switch (scelta)
+    {
+        case 0:
+            menu();
+            break;
+        case 1:
+            menu1();
+            break;
+    }
+
+
+}
+
+void menu1()
+{
+    Console.WriteLine("menu nuovo evento");
+    Console.WriteLine("1. crea nuovo evento");
     //AGG- prenotazioni()
     //AGG- stampaPosti()
     //AGG- disdiciPrenotazioni()
-   
+
+    //chiedete all’utente di inserire un
+    //nuovo evento con tutti i parametri richiesti dal costruttore
 }
 
 void quantiProgrammaEventi()
@@ -91,3 +124,12 @@ void disdiciPrenotazioni()
 //A questo punto provate ad aggiungere al vostro programma oltre che dei semplici
 //eventi anche delle e vere e proprie conferenze (potete fare a meno di svuotare la lista
 //precedentemente creata, commentando il metodo svuota Lista di Eventi).
+
+//ai setters inserire gli opportuni controlli in modo che la data non sia già passata, che il titolo
+//non sia vuoto e che la capienza massima di posti sia un numero positivo. In caso contrario
+//sollevare opportune eccezioni.
+
+
+//Le eccezioni possono essere generiche (Exception) o usate quelle già messe a
+//disposizione da C#, ma aggiungete un eventuale messaggio chiaro per
+//comunicare che cosa è successo.
