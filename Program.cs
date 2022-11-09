@@ -33,6 +33,7 @@ void menu()
     Console.WriteLine("menu iniziale scegli l'operazione");
     Console.WriteLine("/////////////////////////////////");
     Console.WriteLine("1. nuovo evento e modifica evento");
+    Console.WriteLine("2. nuovo programma eventi e modifica evento e modifica programma eventi");
     Console.WriteLine("--------------------------------------------------------------------------------------");
 
 
@@ -44,9 +45,12 @@ void menu()
             menu();
             break;
         case 1:
-
             Evento? evento = null;
             menu1(evento);
+            break;
+        case 2:
+            ProgrammaEventi? p_eventi = null;
+            menu2(p_eventi);
             break;
     }
 
@@ -105,6 +109,40 @@ void menu1(Evento evento)
         default:
             menu1(evento);
             break;
+    }
+}
+
+void menu2(ProgrammaEventi p_eventi)
+{
+    Evento? evento1 = evento;
+    int scelta;
+    Console.WriteLine("--------------------------------------------------------------------------------------");
+    Console.WriteLine("menu nuovo programma eventi");
+    Console.WriteLine("/////////////////////////////////");
+
+    if (evento1 == null)
+    {
+        Console.WriteLine("0. torna al menu precedente");
+        Console.WriteLine("1. crea nuovo programma eventi");
+        scelta = controlloNumero();
+
+    }
+    else
+    {
+        Console.WriteLine("0. torna al menu precedente");
+        Console.WriteLine("1 aggiungi prenotazioni");
+        Console.WriteLine("2 stampa posti disponibili");
+        Console.WriteLine("3 cancella prenotazioni");
+        scelta = controlloNumero() + 1;
+
+    }
+    Console.WriteLine("--------------------------------------------------------------------------------------");
+
+    switch (scelta)
+    {
+        case 0:
+            menu();
+
     }
 }
 
