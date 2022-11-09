@@ -118,6 +118,8 @@ void creazioneEvento(){
     
     Console.WriteLine("inserire data evento");
 
+
+    //TODO cambiare sistema di inserimento data con uno meno macchinoso
     Console.WriteLine("inserire anno");
     int anno = controlloNumero();
     Console.WriteLine("inserire mese");
