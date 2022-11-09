@@ -56,19 +56,27 @@ void menu()
 void menu1(Evento evento)
 {
     Evento? evento1 = evento;
-
+    int scelta;
+    Console.WriteLine("--------------------------------------------------------------------------------------");
     Console.WriteLine("menu nuovo evento");
+    Console.WriteLine("/////////////////////////////////");
 
     if (evento1 == null)
     {
+        Console.WriteLine("0. torna al menu precedente");
         Console.WriteLine("1. crea nuovo evento");
+        scelta = controlloNumero();
+
     }else
     {
+        Console.WriteLine("0. torna al menu precedente");
         Console.WriteLine("1 aggiungi prenotazioni");
         Console.WriteLine("2 stampa posti disponibili");
         Console.WriteLine("3 cancella prenotazioni");
-    }
+        scelta = controlloNumero() + 1;
 
+    }
+    Console.WriteLine("--------------------------------------------------------------------------------------");
 
 
 
@@ -78,20 +86,24 @@ void menu1(Evento evento)
 
     //chiedete all’utente di inserire un
     //nuovo evento con tutti i parametri richiesti dal costruttore
-    int scelta = controlloNumero();
-    if (evento1 == null && scelta != 0) { scelta++; }
-       
 
-        switch (scelta)
+
+    switch (scelta)
     {
         case 0:
-            menu1(evento);
+            menu();
             break;
         case 1:
             creazioneEvento();
             break;
         case 2:
             prenotazioni(evento);
+            break;
+        case 3:
+            stampaPosti(evento);
+            break;
+        default:
+            menu1(evento);
             break;
     }
 }
@@ -178,17 +190,46 @@ void prenotazioni(Evento evento)
     Console.WriteLine("quanti posti vuoi prenotare ?");
     int posti = controlloNumero();
 
+    if (evento.CapienzaMassima - evento.PostiPrenotati > posti)
+    {
+        for (int i = 0; i < posti; i++)
+        {
+            evento.prenotaPosti();
+        }
+    }
+    else
+    {
+        Console.WriteLine("non ci sono posti liberi a sufficienza");
+    }
+
+    menu1(evento);
     //    2.Dopo che l’evento è stato istanziato, chiedete all’utente se e quante prenotazioni
     //vuole fare e provare ad effettuarle.
 }
 
-void stampaPosti()
+void stampaPosti(Evento evento)
 {
+    int liberi = evento.CapienzaMassima - evento.PostiPrenotati;
+
+    Console.WriteLine("sono occupati {0} posti e sono disponibili {1} posti", evento.PostiPrenotati, liberi );
+    menu1(evento);
     //3. Stampare a video il numero di posti prenotati e quelli disponibili
 }
 
-void disdiciPrenotazioni()
+void disdiciPrenotazioni(Evento evento)
 {
+    Console.WriteLine("quante prenotazioni bisogna disdire?");
+    int posti = controlloNumero();
+
+    if(evento.PostiPrenotati > 0)
+    {
+        evento.riduciPosti();
+    }else
+    {
+        Console.WriteLine("non ci sono prenotazioni");
+    }
+
+    menu1(evento);
     //    4.Ora chiedere all’utente fintanto che lo desidera, se e quanti posti vuole disdire. Ogni
     //volta che disdice dei posti, stampare i posti residui e quelli prenotati. 
 }

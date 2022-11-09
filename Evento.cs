@@ -7,7 +7,7 @@ class Evento
     public DateTime Data { get; set; }
 
     public int CapienzaMassima { get; set; }//set privato ma per il momento da errore
-    public int PostiPrenotati { get; }
+    public int PostiPrenotati { get; private set; }
 
     public Evento(string titolo, DateTime data, int capienzaMassima)
     {
@@ -21,6 +21,16 @@ class Evento
 
     public void prenotaPosti()
     {
+        DateTime dataAttuale = DateTime.Now;    
+        if ( DateTime.Compare(dataAttuale, Data)==1 || PostiPrenotati > CapienzaMassima) 
+        {
+            Console.WriteLine("non è possibile aggiungere nuove prenotazioni");
+        } else
+        {
+            PostiPrenotati++;
+        }
+
+
         //1.PrenotaPosti: aggiunge i posti passati come parametro ai posti prenotati. Se
         //l’evento è già passato o non ha posti o non ha più posti disponibili deve sollevare
         //un’eccezione.
@@ -28,6 +38,15 @@ class Evento
 
     public void riduciPosti()
     {
+        DateTime dataAttuale = DateTime.Now;
+        if (DateTime.Compare(dataAttuale, Data) == 1 || PostiPrenotati < 1)
+        {
+            Console.WriteLine("non è possibile togliere prenotazioni");
+        }
+        else
+        {
+            PostiPrenotati--;
+        }
 
     }
 
