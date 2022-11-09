@@ -4,17 +4,17 @@ class Evento
 
 
     public string Titolo { get;  set; }
-    public DateTime Tipo { get; set; }
+    public DateTime Data { get; set; }
 
     public int CapienzaMassima { get; set; }//set privato ma per il momento da errore
     public int PostiPrenotati { get; }
 
-    public Evento(string titolo, DateTime tipo, int capienzaMassima)
+    public Evento(string titolo, DateTime data, int capienzaMassima)
     {
         //e inizializza gli opportuni attributi facendo uso dei metodi e controlli già fatti. Per l’attributo
         //posti prenotati invece si occupa di inizializzarlo lui a 0.
         Titolo = titolo;
-        Tipo = tipo;
+        Data = data;
         CapienzaMassima = capienzaMassima;
         PostiPrenotati = 0;
     }

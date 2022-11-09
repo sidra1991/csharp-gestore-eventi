@@ -6,13 +6,12 @@ using System.Security.Principal;
 
 // funzioni utili
 
-int ScelteMenuINT()
+int controlloNumero()
 {
     int scelta = 0;
     try
     {
-
-         scelta = Convert.ToInt32(Console.ReadLine());
+        scelta = Convert.ToInt32(Console.ReadLine());
     }
     catch (FormatException)
     {
@@ -28,14 +27,16 @@ int ScelteMenuINT()
 }
 
 
-
 void menu()
 {
+    Console.WriteLine("--------------------------------------------------------------------------------------");
     Console.WriteLine("menu iniziale scegli l'operazione");
-    Console.WriteLine("1. nuovo evento");
+    Console.WriteLine("/////////////////////////////////");
+    Console.WriteLine("1. nuovo evento e modifica evento");
+    Console.WriteLine("--------------------------------------------------------------------------------------");
 
 
-    int scelta = ScelteMenuINT();
+    int scelta = controlloNumero();
 
         switch (scelta)
     {
@@ -43,23 +44,98 @@ void menu()
             menu();
             break;
         case 1:
-            menu1();
+
+            Evento? evento = null;
+            menu1(evento);
             break;
     }
 
 
 }
 
-void menu1()
+void menu1(Evento evento)
 {
+    Evento? evento1 = evento;
+
     Console.WriteLine("menu nuovo evento");
-    Console.WriteLine("1. crea nuovo evento");
+
+    if (evento1 == null)
+    {
+        Console.WriteLine("1. crea nuovo evento");
+    }else
+    {
+        Console.WriteLine("1 aggiungi prenotazioni");
+        Console.WriteLine("2 stampa posti disponibili");
+        Console.WriteLine("3 cancella prenotazioni");
+    }
+
+
+
+
     //AGG- prenotazioni()
     //AGG- stampaPosti()
     //AGG- disdiciPrenotazioni()
 
     //chiedete all’utente di inserire un
     //nuovo evento con tutti i parametri richiesti dal costruttore
+    int scelta = controlloNumero();
+    if (evento1 == null && scelta != 0) { scelta++; }
+       
+
+        switch (scelta)
+    {
+        case 0:
+            menu1(evento);
+            break;
+        case 1:
+            creazioneEvento();
+            break;
+        case 2:
+            prenotazioni(evento);
+            break;
+    }
+}
+
+void creazioneEvento(){
+    Console.WriteLine("inserire titolo evento");
+
+    string titolo = Console.ReadLine();
+    Console.WriteLine("inserire capienza massima evento");
+    int capienzaMassima = controlloNumero();
+
+    
+    Console.WriteLine("inserire data evento");
+
+    Console.WriteLine("inserire anno");
+    int anno = controlloNumero();
+    Console.WriteLine("inserire mese");
+    int mese = controlloNumero();
+    Console.WriteLine("inserire giorno");
+    int giorno = controlloNumero();
+    Console.WriteLine("ora \"0 - 24\"");
+    int ora = controlloNumero();
+    Console.WriteLine("inserire minuti");
+    int minuti = controlloNumero();
+
+    DateTime data = new DateTime( anno,mese,giorno,ora,minuti,00 );
+    DateTime comparazione = DateTime.Now;
+
+    if (DateTime.Compare(data, comparazione) == 1)
+    {
+        Evento evento = new Evento(titolo, data, capienzaMassima);
+        menu1(evento);
+    }
+    else
+    {
+        Console.WriteLine("la data non può essere precedente alla data attuale");
+         creazioneEvento();
+    }
+    
+
+
+
+    
+
 }
 
 void quantiProgrammaEventi()
@@ -96,8 +172,12 @@ void nuovoProgrammaEventi()
     //chiedendogli qual è il titolo del suo programma eventi.
 }
 
-void prenotazioni()
+void prenotazioni(Evento evento)
 {
+
+    Console.WriteLine("quanti posti vuoi prenotare ?");
+    int posti = controlloNumero();
+
     //    2.Dopo che l’evento è stato istanziato, chiedete all’utente se e quante prenotazioni
     //vuole fare e provare ad effettuarle.
 }
@@ -113,7 +193,7 @@ void disdiciPrenotazioni()
     //volta che disdice dei posti, stampare i posti residui e quelli prenotati. 
 }
 
-
+menu();
 
 
 //consigli e TODO
