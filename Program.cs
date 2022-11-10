@@ -161,6 +161,7 @@ void menu2(ProgrammaEventi p_eventi)
     {
         Console.WriteLine("0. torna al menu iniziale");
         Console.WriteLine("1. crea nuovo programma eventi");
+        Console.WriteLine("2 crea file csv");
         scelta = controlloNumero();
 
     }
@@ -172,31 +173,37 @@ void menu2(ProgrammaEventi p_eventi)
         Console.WriteLine("3 stampa eventi per una data");
         Console.WriteLine("4 elimina tutti gli eventi dal programma");
         Console.WriteLine("5 mostra dettagli del programma e tutti gli eventi");
-        Console.WriteLine("6. torna al menu iniziale");
-        scelta = controlloNumero() + 1;
+        Console.WriteLine("6 esporta csv del programma");
+        Console.WriteLine("7 importa csv nel programma" );
+        Console.WriteLine("8 torna al menu iniziale");
+        scelta = controlloNumero() + 2;
 
     }
     Console.WriteLine("--------------------------------------------------------------------------------------");
-
     switch (scelta)
     {
         case 0:
-        case 7:
+        case 10:
             menu();
             break;
         case 1:
             nuovoProgrammaEventi();
             break;
         case 2:
+            StreamWriter altroStream = File.CreateText("C:\\Users\\diome\\Desktop\\corso c#\\csharp-gestore-eventi\\nuovodata.csv");
+            altroStream.Close();
+            menu2(p_eventi); ;
+            break;
+        case 3:
             int even = p_eventi.EventiAttuali();
             Console.WriteLine("il numero di eventi in questo programma è "+ even);
             menu2(p_eventi);
             break;
-        case 3:
+        case 4:
             ProgrammaEventi.listaEventi(p_eventi);
             menu2(p_eventi);
             break;
-        case 4:
+        case 5:
             Console.WriteLine("inserire data  esempio = anno,mese,giorno");
             string data = Console.ReadLine();
 
@@ -204,12 +211,20 @@ void menu2(ProgrammaEventi p_eventi)
 
             menu2(p_eventi);
             break;
-        case 5:
+        case 6:
             p_eventi.cancellaLista();
             menu2(p_eventi);
             break;
-        case 6:
+        case 7:
             p_eventi.TitoloProgramma();
+            break;
+        case 8:
+
+            menu2(p_eventi);
+            break;
+        case 9:
+
+            menu2(p_eventi);
             break;
         default:
             menu();
