@@ -102,10 +102,20 @@ class ProgrammaEventi
 
     public void svriviVsc()
     {
-        StreamWriter altroStream = new StreamWriter("C:\\Users\\diome\\Desktop\\corso c#\\csharp-gestore-eventi\\nuovodata.csv");
+        StreamWriter altroStream = File.CreateText("C:\\Users\\diome\\Desktop\\corso c#\\csharp-gestore-eventi\\nuovodata.csv");
+        
         foreach (var item in Eventi)
         {
-            altroStream.WriteLine( Titolo , item.Titolo, item.Data.ToString("D"), item.CapienzaMassima, item.PostiPrenotati );
+
+            altroStream.WriteLine( Titolo );
+            altroStream.WriteLine();
+            altroStream.WriteLine(item.Titolo);
+            altroStream.WriteLine();
+            altroStream.WriteLine( item.Data.ToString("D"));
+            altroStream.WriteLine();
+            altroStream.WriteLine(item.CapienzaMassima);
+            altroStream.WriteLine();
+            altroStream.WriteLine(item.PostiPrenotati);
         }    
 
 

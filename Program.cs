@@ -219,7 +219,7 @@ void menu2(ProgrammaEventi p_eventi)
             p_eventi.TitoloProgramma();
             break;
         case 8:
-
+            p_eventi.svriviVsc();
             menu2(p_eventi);
             break;
         case 9:
