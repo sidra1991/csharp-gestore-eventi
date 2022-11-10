@@ -6,6 +6,7 @@ using System.Security.Principal;
 
 // funzioni utili
 
+
 List<Evento>eventi = new List<Evento>();
 List<ProgrammaEventi> programmi = new List<ProgrammaEventi>();
 
@@ -139,17 +140,23 @@ void menu2(ProgrammaEventi p_eventi)
 
     if (p_eventi == null)
     {
-        Console.WriteLine("0. torna al menu precedente");
+        Console.WriteLine("0. torna al menu iniziale");
         Console.WriteLine("1. crea nuovo programma eventi");
         scelta = controlloNumero();
 
     }
     else
     {
-        Console.WriteLine("0. torna al menu precedente");
-        Console.WriteLine("1 aggiungi prenotazioni");
-        Console.WriteLine("2 stampa posti disponibili");
-        Console.WriteLine("3 cancella prenotazioni");
+        //3.Chiedere all’utente una data e stampate tutti gli eventi in quella data. Usate il metodo
+        //che vi restituisce una lista di eventi in una data dichiarata e create un metodo statico
+        //che si occupa di stampare una lista di eventi che gli arriva. Passate dunque la lista di
+        //eventi in data al metodo statico, per poterla stampare.
+        //4.Eliminate tutti gli eventi dal vostro programma.
+        Console.WriteLine("1 stampa numero eventi nel programma");
+        Console.WriteLine("2 stampa eventi nel programma");
+        Console.WriteLine("3 stampa eventi per data");
+        //Console.WriteLine("3 cancella prenotazioni");
+        //Console.WriteLine("4. torna al menu iniziale");
         scelta = controlloNumero() + 1;
 
     }
@@ -158,11 +165,40 @@ void menu2(ProgrammaEventi p_eventi)
     switch (scelta)
     {
         case 0:
+        case 5:
             menu();
             break;
         case 1:
             nuovoProgrammaEventi();
             break;
+        case 2:
+            Console.WriteLine("il numero di eventi in questo programma è "+ p_eventi.Eventi.Count);
+            menu2(p_eventi);
+            break;
+        case 3:
+            ProgrammaEventi.listaEventi(p_eventi);
+            menu2(p_eventi);
+            break;
+        case 4:
+            Console.WriteLine("inserire data");
+            DateTime data;
+
+            try
+            {
+                data = Convert.ToDateTime(Console.ReadLine());
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("il formato della data non è accettato");
+            }
+
+            if ( data )
+            {
+                ProgrammaEventi.ListaEventiPerData(p_eventi, data);   
+            }
+            menu2(p_eventi);
+            break;
+
 
     }
 }
@@ -201,7 +237,7 @@ void creazioneEvento(ProgrammaEventi p_eventi)
         eventi.Add(evento);
         if ( p_eventi != null )
         {
-            p_eventi.Eventi.Add(evento);
+            p_eventi.aggiungiEvento(evento);
         }else
         {
             Console.WriteLine("l'evento fa parte di un programma eventi?");
@@ -210,7 +246,7 @@ void creazioneEvento(ProgrammaEventi p_eventi)
             {
                 Console.WriteLine("indica ilprogramma");
 
-                ricercaP_eventi().Eventi.Add(evento);
+                ricercaP_eventi().aggiungiEvento(evento);
 
             }
             else
@@ -245,8 +281,16 @@ ProgrammaEventi ricercaP_eventi()
     return programmi[controlloNumero() - 1];
 }
 
-void quantiProgrammaEventi()
+void quantiEventi(ProgrammaEventi p_eventi)
 {
+
+    Console.WriteLine("quanti eventi vuoi creare in questo programma?");
+    int eve = controlloNumero();
+
+    for (int i = 0; i < eve; i++)
+    {
+        creazioneEvento(p_eventi);
+    }
     //Chiedete poi al vostro utente quanti eventi vuole aggiungere, e fategli inserire ad uno ad uno
     //tutti gli eventi necessari chiedendo man mano tutte le informazioni richieste all’utente.
 
@@ -256,25 +300,27 @@ void quantiProgrammaEventi()
     //all’utente di inserire eventi fintanto che non raggiunge il numero di eventi specificato
     //inizialmente dall’utente.
 
+    Console.WriteLine("creare un nuovo programma eventi?");
     //AGG- nuovoProgrammaEventi()
+    if (siOno())
+    {
+        nuovoProgrammaEventi();
+    }
 
-    //    1.Stampate il numero di eventi presenti nel vostro programma eventi
-    //2.Stampate la lista di eventi inseriti nel vostro programma usando il metodo già fatto
+    Console.WriteLine("tornare al menu programma eventi?");
+    if(siOno())
+    {
+        menu2(p_eventi);
+    }
 
     //Agg- menuPostNuovoProgrammaEventi()
 }
 
-void menuPostNuovoProgrammaEventi(ProgrammaEventi p_eventi)
-{
-    //3.Chiedere all’utente una data e stampate tutti gli eventi in quella data. Usate il metodo
-    //che vi restituisce una lista di eventi in una data dichiarata e create un metodo statico
-    //che si occupa di stampare una lista di eventi che gli arriva. Passate dunque la lista di
-    //eventi in data al metodo statico, per poterla stampare.
-    //4.Eliminate tutti gli eventi dal vostro programma.
-}
 
 void nuovoProgrammaEventi()
 {
+//    creare un nuovo programma di Eventi che l’utente vuole organizzare,
+    //chiedendogli qual è il titolo del suo programma eventi.
 
     Console.WriteLine("creazione di un programma di eventi");
     Console.WriteLine("inserire titolo");
@@ -283,24 +329,25 @@ void nuovoProgrammaEventi()
 
 
     ProgrammaEventi p_eventi = new ProgrammaEventi(titolo);
-    //    creare un nuovo programma di Eventi che l’utente vuole organizzare,
-    //chiedendogli qual è il titolo del suo programma eventi.
+    
 
     
 
     Console.WriteLine("inserire eventi ?");
     if (siOno())
     {
-        Console.WriteLine("quanti eventi vuoi creare in questo programma?");
-        int eve = controlloNumero();
-
-        for (int i = 0; i < eve; i++)
-        {
-            creazioneEvento( p_eventi );
-        }
+        quantiEventi(p_eventi);
     }
-    
-    menuPostNuovoProgrammaEventi(p_eventi);
+
+    Console.WriteLine("entrare nel menu del programma evento?");
+    if (siOno())
+    {
+        menu2(p_eventi);
+    }
+    else
+    {
+        menu();
+    }
 }
 
 void prenotazioni(Evento evento)

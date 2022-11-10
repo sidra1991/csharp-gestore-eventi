@@ -13,18 +13,28 @@ class ProgrammaEventi
 
     public void aggiungiEvento(Evento evento)
     {
+
+        Eventi.Add(evento);
         //● un metodo che aggiunge alla lista del programma eventi un Evento, passato come
         //parametro al metodo.
     }
 
-    public static void ListaEventiPerData()
+    public static void ListaEventiPerData(ProgrammaEventi p_eventi, DateTime data)
     {
+
+
         //● un metodo che restituisce una lista di eventi con tutti gli eventi presenti in una certa
         //data.
     }
 
-    public static void listaEventi()
+    public static void listaEventi(ProgrammaEventi p_eventi)
     {
+        int i = 1;
+        foreach (var item in p_eventi.Eventi)
+        {
+            Console.WriteLine("evento "+ i + item.Titolo );
+        }
+
         //● un metodo statico che si occupa, presa una lista di eventi, di stamparla in Console, o
         //ancora meglio vi restituisca la rappresentazione in stringa della vostra lista di eventi.
     }
