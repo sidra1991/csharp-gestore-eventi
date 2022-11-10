@@ -100,6 +100,18 @@ class ProgrammaEventi
         //data3 - titolo3
     }
 
+    public void svriviVsc()
+    {
+        StreamWriter altroStream = new StreamWriter("C:\\Users\\diome\\Desktop\\corso c#\\csharp-gestore-eventi\\nuovodata.csv");
+        foreach (var item in Eventi)
+        {
+            altroStream.WriteLine( Titolo , item.Titolo, item.Data.ToString("D"), item.CapienzaMassima, item.PostiPrenotati );
+        }    
+
+
+        altroStream.Close();
+    }
+
 }
 
 

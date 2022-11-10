@@ -136,7 +136,7 @@ void menu1(Evento evento)
         case 4:
         case 1:
             ProgrammaEventi p_eventi = null;
-            creazioneEvento(p_eventi, scelta);
+            creazioneEvento(p_eventi, scelta, false );
             break;
         case 2:
             prenotazioni(evento);
@@ -234,7 +234,7 @@ void menu2(ProgrammaEventi p_eventi)
 }
 
 
-void creazioneEvento(ProgrammaEventi p_eventi , int scelta)
+void creazioneEvento(ProgrammaEventi p_eventi , int scelta, bool inCreazioneProgramma)
 {
     Console.WriteLine("inserire titolo evento");
 
@@ -319,6 +319,7 @@ void creazioneEvento(ProgrammaEventi p_eventi , int scelta)
 
                     ricercaP_eventi().aggiungiEvento(evento);
 
+
                 }
                 else
                 {
@@ -326,14 +327,21 @@ void creazioneEvento(ProgrammaEventi p_eventi , int scelta)
                 }
 
             }
-            menu1(evento);
+            if (inCreazioneProgramma == false)
+            {
+                menu1(evento);
+            }
         }
         
     }
     else
     {
         Console.WriteLine("la data non può essere precedente alla data attuale");
-         creazioneEvento( p_eventi,scelta);
+       if (inCreazioneProgramma == false) 
+        {
+         creazioneEvento( p_eventi,scelta, false);
+        }
+        
     }
     
 
@@ -363,7 +371,7 @@ void quantiEventi(ProgrammaEventi p_eventi)
     for (int i = 0; i < eve; i++)
     {
         int scelta = 0;
-        creazioneEvento(p_eventi,scelta );
+        creazioneEvento(p_eventi,scelta, true );
     }
     //Chiedete poi al vostro utente quanti eventi vuole aggiungere, e fategli inserire ad uno ad uno
     //tutti gli eventi necessari chiedendo man mano tutte le informazioni richieste all’utente.
@@ -410,6 +418,7 @@ void nuovoProgrammaEventi()
     Console.WriteLine("inserire eventi ?");
     if (siOno())
     {
+      
         quantiEventi(p_eventi);
     }
 
