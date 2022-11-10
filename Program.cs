@@ -154,7 +154,7 @@ void menu2(ProgrammaEventi p_eventi)
         //4.Eliminate tutti gli eventi dal vostro programma.
         Console.WriteLine("1 stampa numero eventi nel programma");
         Console.WriteLine("2 stampa eventi nel programma");
-        Console.WriteLine("3 stampa eventi per data");
+        Console.WriteLine("3 stampa eventi per una data");
         //Console.WriteLine("3 cancella prenotazioni");
         //Console.WriteLine("4. torna al menu iniziale");
         scelta = controlloNumero() + 1;
@@ -172,7 +172,8 @@ void menu2(ProgrammaEventi p_eventi)
             nuovoProgrammaEventi();
             break;
         case 2:
-            Console.WriteLine("il numero di eventi in questo programma è "+ p_eventi.Eventi.Count);
+            int even = p_eventi.EventiAttuali();
+            Console.WriteLine("il numero di eventi in questo programma è "+ even);
             menu2(p_eventi);
             break;
         case 3:
@@ -180,28 +181,18 @@ void menu2(ProgrammaEventi p_eventi)
             menu2(p_eventi);
             break;
         case 4:
-            Console.WriteLine("inserire data");
-            DateTime data;
+            Console.WriteLine("inserire data  esempio = anno,mese,giorno");
+            string data = Console.ReadLine();
 
-            try
-            {
-                data = Convert.ToDateTime(Console.ReadLine());
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("il formato della data non è accettato");
-            }
+             ProgrammaEventi.ListaEventiPerData(p_eventi, data);
 
-            if ( data )
-            {
-                ProgrammaEventi.ListaEventiPerData(p_eventi, data);   
-            }
             menu2(p_eventi);
             break;
 
 
     }
 }
+
 
 void creazioneEvento(ProgrammaEventi p_eventi)
 {

@@ -1,4 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Collections;
+
 class ProgrammaEventi
 {
 
@@ -19,15 +21,39 @@ class ProgrammaEventi
         //parametro al metodo.
     }
 
-    public static void ListaEventiPerData(ProgrammaEventi p_eventi, DateTime data)
+    public static void ListaEventiPerData(ProgrammaEventi p_eventi, string data)
     {
+        List<Evento> listaTrovati = new List<Evento>();
+        DateTime dataUsing = new DateTime(2000,1,1);
+        try
+        {
+           dataUsing = DateTime.Parse(data);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("data non valida");
+        }
 
+        foreach (var item in p_eventi.Eventi)
+        {
+            if (item.Data.ToString("D") == dataUsing.ToString("D"))
+            {
+                listaTrovati.Add(item);
+            }
+        }
+
+        Console.WriteLine("stampa degli eventi trovati");
+        int i = 1;
+        foreach (var item in listaTrovati)
+        {
+            Console.WriteLine(" elemento " + i + item.Titolo);
+        }
 
         //● un metodo che restituisce una lista di eventi con tutti gli eventi presenti in una certa
         //data.
     }
 
-    public static void listaEventi(ProgrammaEventi p_eventi)
+    public static void listaEventi(ProgrammaEventi p_eventi )
     {
         int i = 1;
         foreach (var item in p_eventi.Eventi)
@@ -39,10 +65,14 @@ class ProgrammaEventi
         //ancora meglio vi restituisca la rappresentazione in stringa della vostra lista di eventi.
     }
 
-    public void EventiAttuali()
+    public int EventiAttuali()
     {
+        int ev = Eventi.Count;
+
         //● un metodo che restituisce quanti eventi sono presenti nel programma eventi
         //attualmente.
+
+        return ev;
     }
 
     public void cancellaLista()
