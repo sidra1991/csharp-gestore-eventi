@@ -77,11 +77,21 @@ class ProgrammaEventi
 
     public void cancellaLista()
     {
+
+      Eventi.Clear();
+
         //● un metodo che svuota la lista di eventi.
     }
 
     public void TitoloProgramma() 
     {
+
+        Console.WriteLine(Titolo);
+        foreach (var item in Eventi)
+        {
+            item.ToString();
+        }
+
         //● un metodo che restituisce una stringa che mostra il titolo del programma e tutti gli
         //eventi aggiunti alla lista. Come nell’esempio qui sotto:
         //Nome programma evento:

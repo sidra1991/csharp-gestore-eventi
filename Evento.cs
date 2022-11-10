@@ -6,7 +6,7 @@ class Evento
     public string Titolo { get;  set; }
     public DateTime Data { get; set; }
 
-    public int CapienzaMassima { get; set; }//set privato ma per il momento da errore
+    public int CapienzaMassima { get; protected set; }
     public int PostiPrenotati { get; private set; }
 
     public Evento(string titolo, DateTime data, int capienzaMassima)

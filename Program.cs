@@ -9,6 +9,23 @@ using System.Security.Principal;
 
 List<Evento>eventi = new List<Evento>();
 List<ProgrammaEventi> programmi = new List<ProgrammaEventi>();
+double controlloNumerodouble(){
+    double scelta = 0;
+    try
+    {
+        scelta = Convert.ToDouble(Console.ReadLine());
+    }
+    catch (FormatException)
+    {
+        Console.WriteLine("la scelta effettuata non è un numero");
+    }
+    catch (OverflowException)
+    {
+        Console.WriteLine("il numero è troppo grande");
+    }
+
+    return scelta;
+}
 
 int controlloNumero()
 {
@@ -95,6 +112,7 @@ void menu1(Evento evento)
         Console.WriteLine("1 aggiungi prenotazioni");
         Console.WriteLine("2 stampa posti disponibili");
         Console.WriteLine("3 cancella prenotazioni");
+        Console.WriteLine("4 crea una conferenza");
         scelta = controlloNumero() + 1;
 
     }
@@ -115,9 +133,10 @@ void menu1(Evento evento)
         case 0:
             menu();
             break;
+        case 4:
         case 1:
             ProgrammaEventi p_eventi = null;
-            creazioneEvento(p_eventi);
+            creazioneEvento(p_eventi, scelta);
             break;
         case 2:
             prenotazioni(evento);
@@ -147,16 +166,13 @@ void menu2(ProgrammaEventi p_eventi)
     }
     else
     {
-        //3.Chiedere all’utente una data e stampate tutti gli eventi in quella data. Usate il metodo
-        //che vi restituisce una lista di eventi in una data dichiarata e create un metodo statico
-        //che si occupa di stampare una lista di eventi che gli arriva. Passate dunque la lista di
-        //eventi in data al metodo statico, per poterla stampare.
-        //4.Eliminate tutti gli eventi dal vostro programma.
+
         Console.WriteLine("1 stampa numero eventi nel programma");
         Console.WriteLine("2 stampa eventi nel programma");
         Console.WriteLine("3 stampa eventi per una data");
-        //Console.WriteLine("3 cancella prenotazioni");
-        //Console.WriteLine("4. torna al menu iniziale");
+        Console.WriteLine("4 elimina tutti gli eventi dal programma");
+        Console.WriteLine("5 mostra dettagli del programma e tutti gli eventi");
+        Console.WriteLine("6. torna al menu iniziale");
         scelta = controlloNumero() + 1;
 
     }
@@ -165,7 +181,7 @@ void menu2(ProgrammaEventi p_eventi)
     switch (scelta)
     {
         case 0:
-        case 5:
+        case 7:
             menu();
             break;
         case 1:
@@ -188,21 +204,36 @@ void menu2(ProgrammaEventi p_eventi)
 
             menu2(p_eventi);
             break;
-
+        case 5:
+            p_eventi.cancellaLista();
+            menu2(p_eventi);
+            break;
+        case 6:
+            p_eventi.TitoloProgramma();
+            break;
+        default:
+            menu();
+            break;
 
     }
 }
 
 
-void creazioneEvento(ProgrammaEventi p_eventi)
+void creazioneEvento(ProgrammaEventi p_eventi , int scelta)
 {
     Console.WriteLine("inserire titolo evento");
 
     string titolo = Console.ReadLine();
     Console.WriteLine("inserire capienza massima evento");
     int capienzaMassima = controlloNumero();
+    double prezzo;
+    string relatore;
 
-    
+
+
+
+
+
     Console.WriteLine("inserire data evento");
 
 
@@ -223,35 +254,71 @@ void creazioneEvento(ProgrammaEventi p_eventi)
 
     if (DateTime.Compare(data, comparazione) == 1)
     {
-        Evento evento = new Evento(titolo, data, capienzaMassima);
-        
-        eventi.Add(evento);
-        if ( p_eventi != null )
-        {
-            p_eventi.aggiungiEvento(evento);
-        }else
-        {
-            Console.WriteLine("l'evento fa parte di un programma eventi?");
 
-            if (siOno())
+        if (scelta == 4)
+        {
+            Console.WriteLine("inserire il prezzo");
+            prezzo = controlloNumerodouble();
+            Console.WriteLine("inserire relatore");
+            relatore = Console.ReadLine();
+
+            Conferenza conferenza = new Conferenza( relatore,prezzo, titolo, data, capienzaMassima);
+            if (p_eventi != null)
             {
-                Console.WriteLine("indica ilprogramma");
-
-                ricercaP_eventi().aggiungiEvento(evento);
-
+                p_eventi.aggiungiEvento(conferenza);
             }
             else
             {
+                Console.WriteLine("l'evento fa parte di un programma eventi?");
+
+                if (siOno())
+                {
+                    Console.WriteLine("indica ilprogramma");
+
+                    ricercaP_eventi().aggiungiEvento(conferenza);
+
+                }
+                else
+                {
+
+                }
 
             }
-
+            menu1(conferenza);
         }
-        menu1(evento);
+        else
+        {
+            Evento evento = new Evento(titolo, data, capienzaMassima);
+            eventi.Add(evento);
+            if (p_eventi != null)
+            {
+                p_eventi.aggiungiEvento(evento);
+            }
+            else
+            {
+                Console.WriteLine("l'evento fa parte di un programma eventi?");
+
+                if (siOno())
+                {
+                    Console.WriteLine("indica ilprogramma");
+
+                    ricercaP_eventi().aggiungiEvento(evento);
+
+                }
+                else
+                {
+
+                }
+
+            }
+            menu1(evento);
+        }
+        
     }
     else
     {
         Console.WriteLine("la data non può essere precedente alla data attuale");
-         creazioneEvento( p_eventi);
+         creazioneEvento( p_eventi,scelta);
     }
     
 
@@ -280,7 +347,8 @@ void quantiEventi(ProgrammaEventi p_eventi)
 
     for (int i = 0; i < eve; i++)
     {
-        creazioneEvento(p_eventi);
+        int scelta = 0;
+        creazioneEvento(p_eventi,scelta );
     }
     //Chiedete poi al vostro utente quanti eventi vuole aggiungere, e fategli inserire ad uno ad uno
     //tutti gli eventi necessari chiedendo man mano tutte le informazioni richieste all’utente.
