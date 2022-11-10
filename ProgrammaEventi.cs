@@ -89,7 +89,7 @@ class ProgrammaEventi
         Console.WriteLine(Titolo);
         foreach (var item in Eventi)
         {
-            item.ToString();
+            Console.WriteLine( item.ToString());
         }
 
         //● un metodo che restituisce una stringa che mostra il titolo del programma e tutti gli

@@ -58,7 +58,7 @@ class Evento
         //Per formattare la data correttamente usate
         //nomeVariabile.ToString("dd/MM/yyyy"); applicata alla vostra variabile
         //DateTime.
-        return base.ToString();
+        return Data.ToString("dd/MM/yyyy") + Titolo;
     }
 
 }

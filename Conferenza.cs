@@ -20,11 +20,9 @@ class Conferenza : Evento
     public override string ToString()
     {
 
-
-        Console.WriteLine(Data + Titolo + Relatore + Prezzo + "€");
         //Fate l’override del metodo ToString() in modo che venga restituita una stringa del
         //tipo: data - titolo - relatore - prezzo formattato.
-        return base.ToString();
+        return Data + Titolo + Relatore + Prezzo + "€";
     }
 
     public void FormattaData()
