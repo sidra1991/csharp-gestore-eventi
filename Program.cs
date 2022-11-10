@@ -6,6 +6,9 @@ using System.Security.Principal;
 
 // funzioni utili
 
+List<Evento>eventi = new List<Evento>();
+List<ProgrammaEventi> programmi = new List<ProgrammaEventi>();
+
 int controlloNumero()
 {
     int scelta = 0;
@@ -24,6 +27,20 @@ int controlloNumero()
 
     return scelta;
 
+}
+bool siOno()
+{
+    bool scelta = false;
+
+    string selezione = Console.ReadLine();
+
+
+    if(selezione == "si"|| selezione == "yes" || selezione == "y"|| selezione == "s")
+    {
+        scelta = true;
+    }
+
+    return scelta;
 }
 
 
@@ -98,7 +115,8 @@ void menu1(Evento evento)
             menu();
             break;
         case 1:
-            creazioneEvento();
+            ProgrammaEventi p_eventi = null;
+            creazioneEvento(p_eventi);
             break;
         case 2:
             prenotazioni(evento);
@@ -114,13 +132,12 @@ void menu1(Evento evento)
 
 void menu2(ProgrammaEventi p_eventi)
 {
-    Evento? evento1 = evento;
     int scelta;
     Console.WriteLine("--------------------------------------------------------------------------------------");
     Console.WriteLine("menu nuovo programma eventi");
     Console.WriteLine("/////////////////////////////////");
 
-    if (evento1 == null)
+    if (p_eventi == null)
     {
         Console.WriteLine("0. torna al menu precedente");
         Console.WriteLine("1. crea nuovo programma eventi");
@@ -142,11 +159,16 @@ void menu2(ProgrammaEventi p_eventi)
     {
         case 0:
             menu();
+            break;
+        case 1:
+            nuovoProgrammaEventi();
+            break;
 
     }
 }
 
-void creazioneEvento(){
+void creazioneEvento(ProgrammaEventi p_eventi)
+{
     Console.WriteLine("inserire titolo evento");
 
     string titolo = Console.ReadLine();
@@ -175,12 +197,34 @@ void creazioneEvento(){
     if (DateTime.Compare(data, comparazione) == 1)
     {
         Evento evento = new Evento(titolo, data, capienzaMassima);
+        
+        eventi.Add(evento);
+        if ( p_eventi != null )
+        {
+            p_eventi.Eventi.Add(evento);
+        }else
+        {
+            Console.WriteLine("l'evento fa parte di un programma eventi?");
+
+            if (siOno())
+            {
+                Console.WriteLine("indica ilprogramma");
+
+                ricercaP_eventi().Eventi.Add(evento);
+
+            }
+            else
+            {
+
+            }
+
+        }
         menu1(evento);
     }
     else
     {
         Console.WriteLine("la data non può essere precedente alla data attuale");
-         creazioneEvento();
+         creazioneEvento( p_eventi);
     }
     
 
@@ -188,6 +232,17 @@ void creazioneEvento(){
 
     
 
+}
+
+ProgrammaEventi ricercaP_eventi()
+{
+    int i = 1;
+    foreach (var item in programmi)
+    {
+        Console.WriteLine( i + ". " + item.Titolo );
+    }
+
+    return programmi[controlloNumero() - 1];
 }
 
 void quantiProgrammaEventi()
@@ -209,7 +264,7 @@ void quantiProgrammaEventi()
     //Agg- menuPostNuovoProgrammaEventi()
 }
 
-void menuPostNuovoProgrammaEventi()
+void menuPostNuovoProgrammaEventi(ProgrammaEventi p_eventi)
 {
     //3.Chiedere all’utente una data e stampate tutti gli eventi in quella data. Usate il metodo
     //che vi restituisce una lista di eventi in una data dichiarata e create un metodo statico
@@ -220,8 +275,32 @@ void menuPostNuovoProgrammaEventi()
 
 void nuovoProgrammaEventi()
 {
+
+    Console.WriteLine("creazione di un programma di eventi");
+    Console.WriteLine("inserire titolo");
+    string titolo = Console.ReadLine();
+
+
+
+    ProgrammaEventi p_eventi = new ProgrammaEventi(titolo);
     //    creare un nuovo programma di Eventi che l’utente vuole organizzare,
     //chiedendogli qual è il titolo del suo programma eventi.
+
+    
+
+    Console.WriteLine("inserire eventi ?");
+    if (siOno())
+    {
+        Console.WriteLine("quanti eventi vuoi creare in questo programma?");
+        int eve = controlloNumero();
+
+        for (int i = 0; i < eve; i++)
+        {
+            creazioneEvento( p_eventi );
+        }
+    }
+    
+    menuPostNuovoProgrammaEventi(p_eventi);
 }
 
 void prenotazioni(Evento evento)

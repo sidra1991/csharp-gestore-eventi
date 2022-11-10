@@ -5,7 +5,7 @@ class ProgrammaEventi
     public string Titolo { get; set; }
     public List<Evento> Eventi { get; set; }
 
-    public ProgrammaEventi(string titolo, List<Evento> eventi)
+    public ProgrammaEventi(string titolo)
     {
         Titolo = titolo;
         Eventi = new List<Evento>();
